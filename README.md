@@ -10,7 +10,13 @@ npm run dev
 yarn dev
 # or
 pnpm dev
+# Despliegue
+npm run build
+#Depliegue en el server
+npm start
 ```
+
+
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
