@@ -1,0 +1,42 @@
+{
+  "name": "cliente-web-cuestionarios",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.0.18",
+    "@material-tailwind/react": "^2.1.5",
+    "@react-oauth/google": "^0.12.1",
+    "@react-pdf/renderer": "^3.4.4",
+    "autoprefixer": "10.4.16",
+    "axios": "^1.6.2",
+    "date-fns": "^3.0.6",
+    "dotenv": "^16.3.1",
+    "eslint": "8.55.0",
+    "eslint-config-next": "14.0.3",
+    "exceljs": "^4.4.0",
+    "file-saver": "^2.0.5",
+    "html-to-image": "^1.11.11",
+    "html2canvas": "^1.4.1",
+    "jose": "^5.1.3",
+    "jspdf": "^2.5.1",
+    "lottie-react": "^2.4.0",
+    "next": "14.0.3",
+    "pdfmake": "^0.2.10",
+    "postcss": "8.4.32",
+    "react": "18.2.0",
+    "react-datetime": "^3.2.0",
+    "react-datetime-picker": "^5.6.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.12.0",
+    "react-router-dom": "^6.20.1",
+    "recharts": "^2.11.0",
+    "tailwindcss": "3.3.6",
+    "universal-cookie": "^6.1.1"
+  }
+}
