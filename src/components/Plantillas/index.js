@@ -33,14 +33,20 @@ export * from "@/components/Plantillas/Editar_Respuestas_imagenes";
 export * from "@/components/Plantillas/SELCCLA_edit_resp";
 export * from "@/components/Plantillas/Editar_Respuestas_OPCLAVA";
 
-export * from "@/components//Plantillas/ENSEMUL";
-export * from "@/components//Plantillas/ENSEMUL_resp";
-export * from "@/components//Plantillas/ENSEMUL_resolv";
-export * from "@/components//Plantillas/ENSEMUL_edit";
-export * from "@/components//Plantillas/ENSEMUL_edit_resp";
+export * from "@/components/Plantillas/ENSEMUL";
+export * from "@/components/Plantillas/ENSEMUL_resp";
+export * from "@/components/Plantillas/ENSEMUL_resolv";
+export * from "@/components/Plantillas/ENSEMUL_edit";
+export * from "@/components/Plantillas/ENSEMUL_edit_resp";
 
 //Editar_Respuestas_OPCLAVA
 //SELCCLA_edit_resp
 //MULIMGT
 //OPCLAV2
 //MULTIMG_resolv.jsx
+
+export * from "@/components/Plantillas/ENINMAN";
+export * from "@/components/Plantillas/ENINMAN_resp";
+export * from "@/components/Plantillas/ENINMAN_resolv";
+export * from "@/components/Plantillas/ENINMAN_edit";
+export * from "@/components/Plantillas/ENINMAN_edit_resp";

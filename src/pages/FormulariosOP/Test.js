@@ -15,6 +15,7 @@ import {
   MULIMGT_resolv,
   SELCCMA_resolv,
   ENSEMUL_resolv,
+  ENINMAN_resolv,
 } from "@/components/Plantillas";
 import Cookies from "universal-cookie";
 import { Dialog_Error, Loader, Notification } from "@/widgets"; //Importar el componente
@@ -44,6 +45,8 @@ export default function Test() {
     id_progreso_pregunt,
     id_sec
   ) => {
+    // alert("Entrnado");
+    console.log(r_id_progreso_seccion, tipo, idp, id_progreso_pregunt, id_sec);
     setIdProgresoSeccion(r_id_progreso_seccion);
     set_IDPregunta(idp);
     setIDprogresoPregunta(id_progreso_pregunt);
@@ -85,6 +88,9 @@ export default function Test() {
         break;
       case "ENSEMUL":
         handlerENSEMUL();
+        break;
+      case "ENINMAN":
+        handlerENINMAN();
         break;
       default:
         RegresarProgresoSeccion(true);
@@ -292,7 +298,23 @@ export default function Test() {
     setOpenSELCCMA(false);
     setOpenENSEMUL(false);
   };
-
+  //ENINMAN
+  const [openENINMAN, setOpenENINMAN] = useState(false);
+  const handlerENINMAN = () => {
+    setOpenSELCCLA(false);
+    setOpenSELCIMG(false);
+    setOpenMEMRZAR(false);
+    setOpenProgresoSecciones(false);
+    setOpenLOCIMG(false);
+    setOpenMULTIMG(false);
+    setOpenINGRNUM(false);
+    setOpenOPCLAVA(false);
+    setOpenOPCLAV2(false);
+    setOpenMULIMGT(false);
+    setOpenSELCCMA(false);
+    setOpenENSEMUL(false);
+    setOpenENINMAN(true);
+  };
   const [load, setLoader] = useState(false);
 
   //hacer una funcion que retorne el avance de las preguntas segun la seccion y devuelva la ultima pregunta
@@ -411,6 +433,15 @@ export default function Test() {
       case openENSEMUL:
         return (
           <ENSEMUL_resolv
+            id_pregunta={idPregunta}
+            id_progreso_sec={idProgresoSeccion}
+            RegresarProgresoSeccion={RegresarProgresoSeccion}
+            ProgresoPregunta={id_progrso_pregunta}
+          />
+        );
+      case openENINMAN:
+        return (
+          <ENINMAN_resolv
             id_pregunta={idPregunta}
             id_progreso_sec={idProgresoSeccion}
             RegresarProgresoSeccion={RegresarProgresoSeccion}

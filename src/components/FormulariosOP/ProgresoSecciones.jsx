@@ -34,6 +34,7 @@ import {
 } from "@material-tailwind/react";
 import { Dialog_Error, Loader, Notification } from "@/widgets"; //Importar el componente
 import Cookies from "universal-cookie";
+import { data } from "autoprefixer";
 
 export function ProgresoSecciones({
   openQuestion,
@@ -118,13 +119,14 @@ export function ProgresoSecciones({
           credentials: "include",
         }
       );
-
+      //console.log(response1);
       if (response1.ok) {
         const data1 = await response1.json();
         //alert("Response1.ok");
         //alert("data1.r_verification" + data1.r_verification);
-
-        if (data1.r_verification) {
+        //console.log(data1);
+        //console.log(data1.r_verification ? "True" : "False");
+        if (data1.r_verification === true) {
           const response = await fetch(
             process.env.NEXT_PUBLIC_ACCESLINK +
               "test/ProgresoPreguntasSeccion/" +
@@ -139,16 +141,16 @@ export function ProgresoSecciones({
               credentials: "include",
             }
           );
-
+          console.log(response);
           if (response.ok) {
             //alert("Response OK");
             const responseData = await response.text(); // Obtener el texto de la respuesta
-
             if (responseData.trim() !== "") {
               const data = JSON.parse(responseData);
+              //console.log(data);
               SetSiguientePre(data);
-
               if (data) {
+                //alert("Hay Data");
                 openQuestion(
                   r_id_progreso_seccion,
                   data.r_codigo,
@@ -158,17 +160,22 @@ export function ProgresoSecciones({
                 );
               }
             } else {
+              //alert("Error1");
               obtener_Progreso();
             }
           } else {
+            //alert("Error2");
             obtener_Progreso();
           }
         } else {
+          //alert("Error3");
           obtener_Progreso();
         }
-
+        //console.log(data1);
+        //alert("Error4");
         setLoader(false);
       } else {
+        //alert("Error5");
         obtener_Progreso();
         setLoader(false);
       }
@@ -248,6 +255,7 @@ export function ProgresoSecciones({
   };
   const abrir = (value, r_id_progreso_seccion, r_id_seccion) => {
     //alert(r_id_progreso_seccion);
+    console.log(value, r_id_progreso_seccion, r_id_seccion);
     if (value) setOpenAlert(true);
     else click(r_id_progreso_seccion, r_id_seccion);
   };
@@ -300,7 +308,7 @@ export function ProgresoSecciones({
               Se han agotado los intentos de ingreso al test :C
             </Alert>
           )}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 p-5 ">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-3 p-5 ">
             {progreso.map(
               ({
                 r_id_progreso_seccion,
