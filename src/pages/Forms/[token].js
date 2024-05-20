@@ -481,14 +481,10 @@ export default function Formulario() {
                   <div className="mb-1 flex flex-col gap-6">
                     <Input
                       name="nombresApellidos"
+                      label="Nombres y apellidos"
                       value={formData.nombresApellidos}
                       onChange={handleChange}
                       size="lg"
-                      placeholder="Nombres y apellidos"
-                      className=" !border-t-blue-gray-200 focus:!border-t-gray-900 rounded-none"
-                      labelProps={{
-                        className: "before:content-none after:content-none",
-                      }}
                     />
                     <Input
                       size="lg"
@@ -496,11 +492,7 @@ export default function Formulario() {
                       name="correoInstitucional"
                       value={formData.correoInstitucional}
                       onChange={handleChange}
-                      placeholder="Correo institucional"
-                      className=" !border-t-blue-gray-200 focus:!border-t-gray-900 rounded-none"
-                      labelProps={{
-                        className: "before:content-none after:content-none",
-                      }}
+                      label="Correo institucional"
                     />
                   </div>
                   <Button
