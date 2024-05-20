@@ -7,9 +7,10 @@ import {
   CardFooter,
   Typography,
   Alert,
+  Button,
 } from "@material-tailwind/react";
 
-export function SELCCMA_resolv({
+export function ENINMAN_resolv({
   id_pregunta,
   id_progreso_sec,
   RegresarProgresoSeccion,
@@ -19,6 +20,9 @@ export function SELCCMA_resolv({
   const [data_user, setData_User] = useState([]);
   const [IDPregunta, setIdPregunta] = useState(null);
   const [segundos, setSegundos] = useState(100);
+
+  const [respuesta, setRespuesta] = useState("");
+
   //estados para controlar si la pregunta y las respuestas se han cargado completamente
   const [preguntaCargada, setPreguntaCargada] = useState(false);
   const [respuestasCargadas, setRespuestasCargadas] = useState(false);
@@ -81,7 +85,7 @@ export function SELCCMA_resolv({
 */
 
   const [respuestas, setRespuestas] = useState([]);
-  //funcion para cargar todas las respuestas de una pregunta SELCCMA
+  //funcion para cargar todas las respuestas de una pregunta ENINMAN
   const cargarRespuestas = async (value_id_pregunta) => {
     setLoader(true);
     const response = await fetch(
@@ -110,31 +114,32 @@ export function SELCCMA_resolv({
     //click();
   };
   const Enviar_Respuesta = async (respuesta) => {
-    //process.env.NEXT_PUBLIC_ACCESLINK
-    //Router.push("/Inicio");
-    setLoader(true);
-    try {
-      const result = await axios.post(
-        process.env.NEXT_PUBLIC_ACCESLINK + "test/RegistrarPreguntaUnica",
-        {
-          p_id_progreso_pregunta: ProgresoPregunta,
-          p_respuesta: respuesta,
-          p_tiempo_respuesta: segundos,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      //setLoader(false);
-      RegresarProgresoSeccion(true);
-    } catch (error) {
-      console.log(error);
-      setLoader(false);
-      //colocar una alerta de error cuando no se pueda inciar sesion
-      //alert("Hubo un error");
-      RegresarProgresoSeccion(true);
-      console.log(error);
-      //alert(error.response.data.error);
+    if (respuesta.trim() === "") alert("Debe ingresar una respuesta");
+    else {
+      setLoader(true);
+      try {
+        const result = await axios.post(
+          process.env.NEXT_PUBLIC_ACCESLINK + "test/RegistrarPreguntaUnica",
+          {
+            p_id_progreso_pregunta: ProgresoPregunta,
+            p_respuesta: respuesta,
+            p_tiempo_respuesta: segundos,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        setLoader(false);
+        RegresarProgresoSeccion(true);
+      } catch (error) {
+        console.log(error);
+        setLoader(false);
+        //colocar una alerta de error cuando no se pueda inciar sesion
+        //alert("Hubo un error");
+        RegresarProgresoSeccion(true);
+        console.log(error);
+        alert(error.response.data.message);
+      }
     }
   };
   return (
@@ -160,9 +165,8 @@ export function SELCCMA_resolv({
           </Typography>
           */}
         <div className="font-bold">{data_user.r_enunciado}</div>
-
         {/*
-         <textarea
+        <textarea
           className="border p-2  rounded-sm font-bold"
           size="lg"
           value={data_user.r_enunciado}
@@ -207,69 +211,34 @@ export function SELCCMA_resolv({
             Opciones:
           </Typography>
           <div className="grid grid-cols-1 p-0 mt-1">
-            {respuestas.map(
-              ({
-                r_id_repuesta,
-                r_opcion,
-                r_correcta,
-                r_estado,
-                r_eliminado,
-              }) => (
-                <div
-                  key={r_id_repuesta}
-                  className="bg-white h-2/3 shadow-sm rounded-none cursor-pointer hover:shadow-yellow-900 hover:border-yellow-900 hover:border-4 border-2 border-green-700"
-                  onClick={() => seleccionRepuesta(r_opcion)}
-                >
-                  <div className="bg-zinc-900 text-black  rounded-2xl">
-                    <div className="mx-auto">
-                      <div className="p-5">
-                        {r_opcion}
-                        {/* 
-                        <textarea
-                          className="border p-2 rounded-sm font-bold w-full h-full mt-3"
-                          value={r_opcion}
-                          disabled
-                          readOnly
-                        />
-                        */}
-                        {/*
-                        <img
-                          src={
-                            process.env.NEXT_PUBLIC_ACCESLINK +
-                            "preguntas/Ver_ImagenRespuestaMEMRZAR/" +
-                            r_id_repuesta
-                          }
-                          alt={r_id_repuesta}
-                          className="mt-3 h-64 w-auto mx-auto mb-6"
-                        />
-                        */}
-                      </div>
-                      {/* 
-                      <div className="w-full p-4">
-                        <input
-                          className="w-full text-lg bg-blue-gray-50 font-semibold	text-blue-gray-800 "
-                          disabled
-                          value={r_opcion}
-                        />
-                      </div>
-                      */}
-                      <div className="w-auto flex ml-2 mb-2">{/** */}</div>
-
-                      <div className="w-auto flex ml-2 mb-2">{/** */}</div>
-                      {/* 
-                    <div className="p-2 flex justify-end">
-                      <Tooltip content="Editar respuesta">
-                        <button className="bg-zinc-50 p-2 bg-green-700 rounded-xl cursor-pointer">
-                          <PencilIcon className="w-7" color="white" />
-                        </button>
-                      </Tooltip>
-                    </div>
-                    */}
-                    </div>
+            <div className="bg-white  h-full shadow-sm rounded-none ">
+              <div className="bg-zinc-900 text-black  rounded-2xl">
+                <div className="mx-auto">
+                  <div className="">
+                    <textarea
+                      className=" p-2 rounded-sm font-bold w-full h-full m-0 border-2 border-green-700"
+                      rows={5} // Número de filas
+                      cols={50} // Número de columnas
+                      value={respuesta}
+                      placeholder="Aquí escribe la respuesta"
+                      onChange={(e) => setRespuesta(e.target.value)}
+                    />
                   </div>
+                  <div className="w-auto flex ml-2 mb-2">{/** */}</div>
+
+                  <div className="w-auto flex ml-2 mb-2">{/** */}</div>
                 </div>
-              )
-            )}
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-end items-center">
+            <Button
+              onClick={() => Enviar_Respuesta(respuesta)}
+              color="green"
+              className="rounded-none"
+            >
+              Enviar Respuestas
+            </Button>
           </div>
         </div>
 
@@ -295,4 +264,5 @@ export function SELCCMA_resolv({
     </Card>
   );
 }
-export default SELCCMA_resolv;
+
+export default ENINMAN_resolv;
