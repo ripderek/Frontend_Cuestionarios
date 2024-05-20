@@ -19,12 +19,14 @@ import {
 } from "@heroicons/react/24/solid";
 const TABLE_HEAD = ["Opcion", ""];
 
-export  function VerDetalleSalto({
+export function VerDetalleSalto({
   idtest,
   idnivel,
   iidsecciontest,
   cerrar,
   nivelSalto,
+  pregunta,
+  respuesta,
 }) {
   const [load, setLoader] = useState(false);
   const [ListaSaltos, SetListaSaltos] = useState([]);
@@ -42,7 +44,11 @@ export  function VerDetalleSalto({
           "/" +
           idnivel +
           "/" +
-          iidsecciontest,
+          iidsecciontest +
+          "/" +
+          pregunta +
+          "/" +
+          respuesta,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -84,7 +90,7 @@ export  function VerDetalleSalto({
               />
 
               <div className="h-96 overflow-y-auto mt-5">
-                <table className="w-auto mx-auto  table-auto text-left">
+                <table className="w-full   table-auto text-center">
                   <thead>
                     <tr>
                       {TABLE_HEAD.map((head) => (
@@ -126,7 +132,7 @@ export  function VerDetalleSalto({
                               <Typography
                                 variant="small"
                                 color="blue-gray"
-                                className="font-normal"
+                                className="font-bold"
                               >
                                 Salto nivel: {nivelSalto}
                               </Typography>

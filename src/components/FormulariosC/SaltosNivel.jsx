@@ -17,10 +17,12 @@ import {
   EyeIcon,
   TrashIcon,
 } from "@heroicons/react/24/solid";
+import axios from "axios";
+
 const TABLE_HEAD = ["Nivel Inicial", "Nivel Salto", ""];
 import { VerDetalleSalto, CrearSalto } from "@/components/FormulariosC";
 
-export  function SaltosNivel({ id_test, cerrar, id_seccion }) {
+export function SaltosNivel({ id_test, cerrar, id_seccion }) {
   //cargar los niveles que son diferentes de 0 las preguntas
   const [load, setLoader] = useState(false);
   const [ListaSaltos, SetListaSaltos] = useState([]);
@@ -59,13 +61,59 @@ export  function SaltosNivel({ id_test, cerrar, id_seccion }) {
   const [VerSalto, SetVerSalto] = useState(false);
   const [Nivel, SetNivel] = useState(0);
   const [SaltoNivel, setSaltoNivel] = useState(0);
-  const HandleVerSalto = (id_nviel_sa, salto) => {
+  const [Pregunta, setPregunta] = useState(0);
+  const [Respuesta, setrespuesta] = useState(0);
+  const HandleVerSalto = (id_nviel_sa, salto, pre, resp) => {
     SetNivel(id_nviel_sa);
     setSaltoNivel(salto);
+    setPregunta(pre);
+    setrespuesta(resp);
     SetVerSalto(true);
   };
   const [CrearSalto2, setCrearSalto] = useState(false);
 
+  //eliminar el salto de nivel
+  const EliminarSalto = async (
+    IdNivelSeleccionado,
+    nivelSaltoDestino,
+    idPRegunta,
+    id_opcion_salto,
+    id_test,
+    id_seccion
+  ) => {
+    //IdNivelSeleccionado id del nivel seleccionado para hacer el salto
+    //nivelSaltoDestino   id nivel destino del salto
+    //idPRegunta          id de la pregunta que realizara el salto
+    //id_opcion_salto     id de la opcion que realizara el salto
+    //id_test             id del test actual para hacer el salto
+    //id_seccion          id de la seccion que realiza el salto
+    const InfoSalto = {
+      p_NivelOrigen: IdNivelSeleccionado,
+      p_NivelDestino: nivelSaltoDestino,
+      p_IdPregunta: idPRegunta,
+      p_IdOpcionSalto: id_opcion_salto,
+      p_IdTest: id_test,
+      p_IdSeccion: id_seccion,
+    };
+
+    setLoader(true);
+    try {
+      //ahora enviar el id del test, id de la seccion y Json con los niveles
+      const result = await axios.post(
+        process.env.NEXT_PUBLIC_ACCESLINK + "test/SP_Eliminar_Salto_Nivel",
+        InfoSalto,
+        {
+          withCredentials: true,
+        }
+      );
+      setLoader(false);
+      Obtener_Secciones_Usuario();
+    } catch (error) {
+      setLoader(false);
+      console.log(error);
+      alert("Error");
+    }
+  };
   return (
     <>
       <Dialog open={true} handler={cerrar}>
@@ -75,7 +123,7 @@ export  function SaltosNivel({ id_test, cerrar, id_seccion }) {
           <CrearSalto
             id_test={id_test}
             id_seccion={id_seccion}
-            cerrar={() => setCrearSalto(false)}
+            cerrar={() => (setCrearSalto(false), Obtener_Secciones_Usuario())}
           />
         ) : (
           ""
@@ -88,6 +136,8 @@ export  function SaltosNivel({ id_test, cerrar, id_seccion }) {
             iidsecciontest={id_seccion}
             nivelSalto={SaltoNivel}
             cerrar={() => SetVerSalto(false)}
+            pregunta={Pregunta}
+            respuesta={Respuesta}
           />
         ) : (
           ""
@@ -112,7 +162,7 @@ export  function SaltosNivel({ id_test, cerrar, id_seccion }) {
           </div>
           {ListaSaltos.length !== 0 && (
             <div className="h-96 overflow-y-auto mt-5">
-              <table className="w-auto mx-auto  table-auto text-center">
+              <table className="w-full   table-auto text-center">
                 <thead>
                   <tr>
                     {TABLE_HEAD.map((head) => (
@@ -133,7 +183,20 @@ export  function SaltosNivel({ id_test, cerrar, id_seccion }) {
                 </thead>
                 <tbody>
                   {ListaSaltos.map(
-                    ({ r_id_nivel, r_nivel, r_nivel_salto }, index) => {
+                    (
+                      {
+                        r_id_nivel,
+                        r_nivel,
+                        r_nivel_salto,
+                        r_id_test,
+                        r_id_nivel_origin,
+                        r_id_pregunta,
+                        r_id_nivel_salto,
+                        r_id_opcion_respuesta,
+                        r_id_seccion_test,
+                      },
+                      index
+                    ) => {
                       const isLast = index === ListaSaltos.length - 1;
                       const classes = isLast
                         ? "p-2"
@@ -163,12 +226,29 @@ export  function SaltosNivel({ id_test, cerrar, id_seccion }) {
                             <IconButton
                               className="mx-auto bg-white"
                               onClick={() =>
-                                HandleVerSalto(r_id_nivel, r_nivel_salto)
+                                HandleVerSalto(
+                                  r_id_nivel,
+                                  r_nivel_salto,
+                                  r_id_pregunta,
+                                  r_id_opcion_respuesta
+                                )
                               }
                             >
                               <EyeIcon className="w-11" color="green" />
                             </IconButton>
-                            <IconButton className="mx-auto bg-white ml-7">
+                            <IconButton
+                              className="mx-auto bg-white ml-7"
+                              onClick={() =>
+                                EliminarSalto(
+                                  r_id_nivel_origin,
+                                  r_id_nivel_salto,
+                                  r_id_pregunta,
+                                  r_id_opcion_respuesta,
+                                  r_id_test,
+                                  r_id_seccion_test
+                                )
+                              }
+                            >
                               <TrashIcon className="w-11" color="red" />
                             </IconButton>
                           </td>

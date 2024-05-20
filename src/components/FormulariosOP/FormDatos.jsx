@@ -16,9 +16,9 @@ import { useRouter } from "next/router";
 export function FormDatos() {
   //cargar los datos del participantes segun el token id de las coockies
   const [DatosParticipante, SetDatosParticipante] = useState([]);
-  const [load, setLoader] = useState(false);
+  const [load, setLoader] = useState(true);
   useEffect(() => {
-    Datos_Participante();
+    Registrar_Participante();
   }, []);
   const cookies = new Cookies();
   const router = useRouter();
@@ -50,27 +50,9 @@ export function FormDatos() {
     p_token_id_participante: cookies.get("id_user"),
     p_token_id_test: cookies.get("token_test"),
     p_facultad: "NA",
-    p_carrera: "Software",
-    p_semestre: "7",
+    p_carrera: "NA",
+    p_semestre: "2",
   });
-
-  const HandleChange = (e) => {
-    SetRegistro({ ...registro_usuario_test, [e.target.name]: e.target.value });
-    //console.log(registro_usuario_test);
-  };
-
-  const [facultad, setFacultad] = useState("");
-
-  const handleFacultadChange = (e) => {
-    //console.log("HOla aaidadiasjod jioa", e);
-    const value = e; // Obtiene el valor seleccionado del Select
-    setFacultad(value); // Actualiza el estado facultad con el valor seleccionado
-    // Actualiza también el estado registro_usuario_test con el valor seleccionado en p_facultad
-    SetRegistro((prevState) => ({
-      ...prevState,
-      p_facultad: value,
-    }));
-  };
 
   //funcion para registrar y enviar a otra ruta donde cargaran las secciones y las preguntas
   //variable para detectar un error y mostrar el error
@@ -85,14 +67,7 @@ export function FormDatos() {
     //process.env.NEXT_PUBLIC_ACCESLINK
     //Router.push("/Inicio");
     setLoader(true);
-
     try {
-      // Verificar que los campos no estén vacíos
-      if (!registro_usuario_test.p_facultad.trim()) {
-        // Si el campo nombresApellidos está vacío, muestra un mensaje de error
-        throw new Error("Debe seleccionar una facultad");
-      }
-
       //aqui hay que crear un procedimiento que genere todas las preguntas
       //que va a tener el usuario y las cree en una tabla
       console.log(registro_usuario_test);
@@ -146,6 +121,7 @@ export function FormDatos() {
       ) : (
         ""
       )}
+      {/*
       <Card
         color="transparent"
         shadow={false}
@@ -179,118 +155,8 @@ export function FormDatos() {
                 className: "before:content-none after:content-none",
               }}
             />
-            {/* 
-            <Typography variant="h6" color="blue-gray" className="-mb-3">
-              Your Email
-            </Typography>
-             <div className="flex w-75 flex-col gap-6">
-              <Select
-                color="green"
-                label="Facultad"
-                onChange={handleFacultadChange} // Llama a la función handleFacultadChange en cada cambio
-                value={facultad} // Establece el valor del Select como la facultad seleccionada
-                name="p_facultad"
-              >
-                <Option value="Facultad Ciencias de la Ingeniería">
-                  Facultad Ciencias de la Ingeniería
-                </Option>
-                <Option value="Facultad Ciencias Agrarias y Forestales">
-                  Facultad Ciencias Agrarias y Forestales
-                </Option>
-                <Option value="Facultad Ciencias Empresariales">
-                  Facultad Ciencias Empresariales
-                </Option>
-                <Option value="Facultad Ciencias Pecuarias y Biológicas">
-                  Facultad Ciencias Pecuarias y Biológicas
-                </Option>
-                <Option value="Facultad Ciencias Sociales, Económicas y Financieras">
-                  Facultad Ciencias Sociales, Económicas y Financieras
-                </Option>
-                <Option value="Facultad Ciencias de la Industria y Producción">
-                  Facultad Ciencias de la Industria y Producción
-                </Option>
-                <Option value="Facultad Ciencias de la Salud">
-                  Facultad Ciencias de la Salud
-                </Option>
-                <Option value="Facultad Ciencias de la Educación">
-                  Facultad Ciencias de la Educación
-                </Option>
-              </Select>
-            </div>
-            */}
-
-            {/*
-            <Input
-              size="lg"
-              placeholder="Facultad"
-              name="p_facultad"
-              onChange={HandleChange}
-              className=" !border-yellow-800 focus:!border-green-600 rounded-none"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-            />
-            <Input
-              size="lg"
-              placeholder="Carrera"
-              onChange={HandleChange}
-              name="p_carrera"
-              className=" !border-yellow-800 focus:!border-green-600 rounded-none"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-            />
-            */}
-
-            {/*
-            <div className="flex">
-              <div className="flex-grow ">
-                <Typography
-                  variant="h6"
-                  color="blue-gray"
-                  className="-mb-3 text-center items-center justify-center mr-2 rounded-none"
-                >
-                  Semestre:
-                </Typography>
-              </div>
-              <div className="flex-shrink">
-                <Input
-                  type="number"
-                  max={10}
-                  min={1}
-                  maxLength={2}
-                  minLength={1}
-                  onChange={HandleChange}
-                  name="p_semestre"
-                  className=" !border-yellow-800 focus:!border-green-600 rounded-none"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                />
-              </div>
-            </div>
-            */}
           </div>
-          {/* 
-          <Checkbox
-            label={
-              <Typography
-                variant="small"
-                color="gray"
-                className="flex items-center font-normal"
-              >
-                I agree the
-                <a
-                  href="#"
-                  className="font-medium transition-colors hover:text-gray-900"
-                >
-                  &nbsp;Terms and Conditions
-                </a>
-              </Typography>
-            }
-            containerProps={{ className: "-ml-2.5" }}
-          />
-          */}
+
           {load ? (
             ""
           ) : (
@@ -304,6 +170,7 @@ export function FormDatos() {
           )}
         </form>
       </Card>
+       */}
     </div>
   );
 }
