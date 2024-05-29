@@ -39,7 +39,7 @@ export function NavBarFormsLogin({ user_name, titulo, viewLogin, loginG }) {
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-2">
         <a class="flex items-center space-x-3 rtl:space-x-reverse">
           <img
-            src="./img/Home/uteq_logo3.png"
+            src="/img/Home/uteq_logo3.png"
             class="h-12"
             alt="Flowbite Logo"
           />

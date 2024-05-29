@@ -186,11 +186,9 @@ export  function SELCCLA_resolv({
             Escriba el enunciado:
           </Typography>
           */}
-        <textarea
-          className="border p-2  rounded-sm font-bold"
-          size="lg"
-          value={data_user.r_enunciado}
-        />
+    
+                <div className="font-bold">{data_user.r_enunciado}</div>
+
         {/*
           <div className="flex items-center">
             <Typography className="text-lg font-bold" color="black">
