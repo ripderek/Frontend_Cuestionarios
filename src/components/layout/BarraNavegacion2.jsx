@@ -63,7 +63,7 @@ export function BarraNavegacion2({ routes, brandImg, brandName }) {
                 className={`h-auto w-44 mx-auto text-center shadow-none${sidenavTypes[sidenavType]}`}
               >
                 <img
-                  src="./img/Home/UTEQ.png"
+                  src="/img/Home/UTEQ.png"
                   alt="Empresa logo"
                   className="w-auto"
                 />
